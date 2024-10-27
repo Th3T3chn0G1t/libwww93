@@ -125,7 +125,7 @@ typedef void (*HTStructuredStartElement)(
 typedef void (*HTStructuredEndElement)(HTStructured*, int);
 typedef void (*HTStructuredPutEntity)(HTStructured*, int);
 
-typedef struct _HTStructured {
+typedef struct _HTStructuredClass {
 	char* name; /* Just for diagnostics */
 
 	HTStructuredFree free;
