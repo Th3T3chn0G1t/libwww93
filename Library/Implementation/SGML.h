@@ -114,30 +114,28 @@ typedef struct _HTSGMLContext* HTSGMLContext;   /* Hidden */
 
 typedef struct _HTStructured HTStructured;
 
-typedef struct _HTStructuredClass {
+typedef void (*HTStructuredFree)(HTStructured*);
+typedef void (*HTStructuredAbort)(HTStructured*, HTError);
+typedef void (*HTStructuredPutCharacter)(HTStructured*, char);
+typedef void (*HTStructuredPutString)(HTStructured*, const char*);
+typedef void (*HTStructuredWrite)(HTStructured*, const char*, unsigned);
+typedef void (*HTStructuredStartElement)(
+		HTStructured*, int, const HTBool*, const char**);
 
-	char* name;                            /* Just for diagnostics */
+typedef void (*HTStructuredEndElement)(HTStructured*, int);
+typedef void (*HTStructuredPutEntity)(HTStructured*, int);
 
-	void (* free)(HTStructured* me);
+typedef struct _HTStructured {
+	char* name; /* Just for diagnostics */
 
-	void (* abort)(HTStructured* me, HTError e);
-
-	void (* put_character)(HTStructured* me, char ch);
-
-	void (* put_string)(HTStructured* me, const char* str);
-
-	void (* write)(HTStructured* me, const char* str, unsigned len);
-
-	void (* start_element)(
-			HTStructured* me, int element_number,
-			const HTBool* attribute_present, const char** attribute_value);
-
-	void (* end_element)(
-			HTStructured* me, int element_number);
-
-	void (* put_entity)(
-			HTStructured* me, int entity_number);
-
+	HTStructuredFree free;
+	HTStructuredAbort abort;
+	HTStructuredPutCharacter put_character;
+	HTStructuredPutString put_string;
+	HTStructuredWrite write;
+	HTStructuredStartElement start_element;
+	HTStructuredEndElement end_element;
+	HTStructuredPutEntity put_entity;
 } HTStructuredClass;
 
 
