@@ -62,13 +62,6 @@ typedef char HTBool;
 /*
  * Out Of Memory checking for malloc() return:
  */
-#ifdef __has_attribute
-# if __has_attribute(noreturn)
-__attribute__((noreturn))
-# endif
-#elif defined(_MSC_VER)
-__declspec(noreturn)
-#endif
 void HTOOM(const char* file, const char* func);
 
 #endif /* HTUTILS_H */
